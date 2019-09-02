@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import store from '../Store/index'
-import { getListCreator, putTodoCreator, postTodoCreator } from '../Store/actionCreators'
+import { getListCreator, putTodoCreator, postTodoCreator, deleteTodoCreator } from '../Store/actionCreators'
 import TodolistUI from './TodolistUI';
 
 export default class Todolist extends Component {
@@ -10,6 +10,7 @@ export default class Todolist extends Component {
         this.storeSubscribe = this.storeSubscribe.bind(this);
         this.putTodo = this.putTodo.bind(this);
         this.postTodo = this.postTodo.bind(this);
+        this.deleteTodo = this.deleteTodo.bind(this);
         store.subscribe(this.storeSubscribe);
     }
 
@@ -21,6 +22,8 @@ export default class Todolist extends Component {
                 todo={todo}
                 list={list}
                 putTodo={this.putTodo}
+                postTodo={this.postTodo}
+                deleteTodo={this.deleteTodo}
             />
         )
     }
@@ -48,6 +51,12 @@ export default class Todolist extends Component {
     // 添加todo到list
     postTodo() {
         const action = postTodoCreator();
+        store.dispatch(action);
+    }
+
+    // 从list中删除todo
+    deleteTodo(index) {
+        const action = deleteTodoCreator(index);
         store.dispatch(action);
     }
 }
